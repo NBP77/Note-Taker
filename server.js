@@ -14,10 +14,19 @@ app.use(express.static(path.join(__dirname, "Develop/public")));
 var notesInfo = [];
 
 
-
-// Routes
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'develop/public/index.html')));
 app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'develop/public/notes.html')));
+app.get('/api/notes', (req, res) => res.sendFile(path.join(__dirname, 'develop/db/db.json')));
+
+// Post function
+app.post('/api/notes', (req, res) => {
+
+});
+// Get Function 
+app.get('/api/notes', (req, res) => {
+
+});
+
 
 // app.get('/api/characters', (req, res) => res.json(characters));
 
