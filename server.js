@@ -3,16 +3,16 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 3000; 
-// process.env.PORT || 
+const PORT = process.env.PORT || 3000 
+
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Routes
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'notes.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'develop/public/index.html')));
+app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'develop/public/notes.html')));
 
 // app.get('/api/characters', (req, res) => res.json(characters));
 
