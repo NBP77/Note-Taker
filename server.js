@@ -9,6 +9,11 @@ const PORT = process.env.PORT || 3001;
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "Develop/public")));
+
+var notesInfo = [];
+
+
 
 // Routes
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'develop/public/index.html')));
