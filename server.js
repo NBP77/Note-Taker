@@ -23,8 +23,17 @@ app.post('/api/notes', (req, res) => {
 
 });
 // Get Function 
-app.get('/api/notes', (req, res) => {
+app.get('/api/notes', (err, res) => {
+    try {
+     notesInfo = fs.readFileSync('./develop/db/db.json', 'utf8');
+     console.log("hello World");  
+     
+     notesInfo = JSON.parse(notesInfo);
 
+    } catch (err) {
+        console.log("Error");
+      }
+      res.json(notesData);
 });
 
 
