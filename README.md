@@ -51,6 +51,6 @@ A great use of express.js
 
 ## Credits
 
-I was able to do most of this based of the activities we have done in class but I think the setup of the html hurt me a bit when it came to making local storage consistent. 
+I was able to do most of this based of the activities we have done in class.
 
 
