@@ -14,18 +14,37 @@ app.use(express.static(path.join(__dirname, "Develop/public")));
 var notesInfo = [];
 
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'develop/public/index.html')));
-app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'develop/public/notes.html')));
-app.get('/api/notes', (req, res) => res.sendFile(path.join(__dirname, 'develop/db/db.json')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'Develop/public/index.html')));
+app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'Develop/public/notes.html')));
+app.get('/api/notes', (req, res) => res.sendFile(path.join(__dirname, 'Develop/db/db.json')));
 
 // Post function
 app.post('/api/notes', (req, res) => {
+    try {
+        notesInfo = fs.readFileSync('Develop/db/db.json', 'utf8');
+        console.log(notesInfo);
 
+        notesInfo = JSON.parse(notesInfo)
+        req.body.id = notesInfo.length;
+
+        notesInfo.push(req.body);
+
+        notesInfo = JSON.stringify(notesInfo);
+        fs.writeFile('Develop/db/db.json', notesInfo, 'utf8', (err) => {
+            if (err) throw err;
+        });
+
+        res.json(JSON.parse(notesInfo));
+         
+    } catch (err) {
+        throw err
+    }
+    
 });
 // Get Function 
 app.get('/api/notes', (err, res) => {
     try {
-     notesInfo = fs.readFileSync('./develop/db/db.json', 'utf8');
+     notesInfo = fs.readFileSync('./Develop/db/db.json', 'utf8');
      console.log("hello World");  
      
      notesInfo = JSON.parse(notesInfo);
@@ -36,44 +55,6 @@ app.get('/api/notes', (err, res) => {
       res.json(notesData);
 });
 
-
-// app.get('/api/characters', (req, res) => res.json(characters));
-
-// // Displays a single character, or returns false
-// app.get('/api/characters/:character', (req, res) => {
-//   const chosen = req.params.character;
-
-//   console.log(chosen);
-
-//   /* Check each character routeName and see if the same as "chosen"
-//    If the statement is true, send the character back as JSON,
-//    otherwise send the boolean value false as JSON */
-
-//   for (let i = 0; i < characters.length; i++) {
-//     if (chosen === characters[i].routeName) {
-//       return res.json(characters[i]);
-//     }
-//   }
-
-//   return res.json(false);
-// });
-
-// // Create New Characters - takes in JSON input
-// app.post('/api/characters', (req, res) => {
-//   // req.body hosts is equal to the JSON post sent from the user
-//   // This works because of our body parsing middleware
-//   const newcharacter = req.body;
-
-//   console.log(newcharacter);
-
-//   // We then add the json the user sent to the character array
-//   characters.push(newcharacter);
-
-//   // We then display the JSON to the users
-//   res.json(newcharacter);
-// });
-
-// Starts the server to begin listening
 
 app.listen(PORT, () => console.log(`Server listening on: http://localhost:${PORT}`)
 );
